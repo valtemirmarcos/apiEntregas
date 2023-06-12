@@ -1,0 +1,3 @@
+[submodule "apiEntregas"]
+	path = apiEntregas
+	url = https://github.com/valtemirmarcos/apiEntregas.git
