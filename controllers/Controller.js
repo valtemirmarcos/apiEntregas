@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 class Controller {
   constructor() {
     // Alguma lógica de inicialização
@@ -45,6 +47,25 @@ class Controller {
                 'data': error
         });
     }
+
+     analisaToken = async(req, res, token) => {
+        try{
+            const verificador = await jwt.verify(token, process.env.SECRET_KEY);
+            return verificador;
+        }catch(error){
+            const err={
+                mensagem:'Token Invalido'
+            }
+            throw err.mensagem;
+        }
+    } 
+    validaBuscarDadosToken = async(req, res) => {
+        const authHeader = req.headers.authorization;
+        const token  = authHeader.replace("Bearer ","");
+        const resp = await this.analisaToken(req, res, token);
+        return resp;
+    }
+
 }
 
 module.exports = new Controller();

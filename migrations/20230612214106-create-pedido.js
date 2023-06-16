@@ -20,7 +20,9 @@ module.exports = {
         onDelete:'cascade'
       },
       numeroPedido: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.STRING,
+        primaryKey: true,
       },
       dadosRemetente: {
         type: Sequelize.STRING

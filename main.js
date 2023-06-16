@@ -1,7 +1,9 @@
 
+require('dotenv').config();
 const requires = require('./requires');
-const {app, bodyParser, cors, express} = requires;
+const {app, bodyParser, cors, express, moment} = requires;
 const rotas = require('./rotas/rotas');
+moment.tz.setDefault('America/Sao_Paulo');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:false}));

@@ -12,14 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Pedido.belongsTo(models.User);
-      Pedido.belongsTo(models.Entrega);
+      Pedido.hasOne(models.Entrega);
     }
   }
   Pedido.init({
     userId: DataTypes.INTEGER,
     numeroPedido: DataTypes.STRING,
     dadosRemetente: DataTypes.STRING,
-    dadosDestinatarios: DataTypes.STRING
+    dadosDestinatarios: DataTypes.STRING,
+    status:DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Pedido',
