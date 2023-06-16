@@ -17,8 +17,11 @@ let sequelize;
 //   sequelize = new Sequelize(config.database, config.username, config.password, config);
 // }
 sequelize = new Sequelize(process.env.DATABASE, process.env.USERNAME, process.env.PASSWORD, {
-  "dialect":process.env.DIALECT
+  dialect:process.env.DIALECT,
+  host: process.env.HOST,
+  timezone: '-03:00'
 });
+
 fs
   .readdirSync(__dirname)
   .filter(file => {
