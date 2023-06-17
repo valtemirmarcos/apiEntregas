@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 // este express.json é usado para ler conteudo do request(req)
 app.use(express.json());
 app.use('/', rotas);
-
+// teste de git
 
 
 let port = process.env.PORT || 3000;
