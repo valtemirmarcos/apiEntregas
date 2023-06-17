@@ -8,7 +8,7 @@ class ControllerLogin{
   }
 
   async testarLogin(req, res) {
-    // console.log("ok");// Chama o método 'teste' herdado da classe pai (Controller)
+     console.log("ok");// Chama o método 'teste' herdado da classe pai (Controller)
     Controller.responseSuccess(res, "ok sim");
   }
   async Authentication(req, res) {

@@ -5,10 +5,8 @@
     "database": "appEntregas",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "dialectOptions": {
-      "dateStrings": true,
-      "typeCast": true
-    }
+    "timezone": "-03:00"
+
   },
   "test": {
     "username": "root",
@@ -19,9 +17,10 @@
   },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "password": "123456",
+    "database": "appEntregas",
+    "host": "54.174.87.16",
+    "dialect": "mysql",
+    "timezone": "-03:00"
   }
 }
