@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     foto: DataTypes.STRING,
     descricao: DataTypes.TEXT,
     url:DataTypes.STRING,
+    fotoB64: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'Foto',

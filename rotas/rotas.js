@@ -35,6 +35,7 @@ const controllerFoto = new ControllerFoto();
         rota.get('/create',controllerFoto.CreateFoto);
         rota.get('/update',controllerFoto.UpdateFoto);
         rota.get('/delete/:idFoto',controllerFoto.DeleteFoto);
-        rota.get('/',controllerFoto.ListarFotosPorEntrega);
+        rota.get('/listaFotos/:idEntrega',controllerFoto.ListarFotosPorEntrega);
+        rota.get('/listarImagens',controllerFoto.ListarImagens);
     });
 module.exports = rotas;

@@ -41,8 +41,18 @@ class ControllerFoto{
     try{
         const respostaToken = await Controller.validaBuscarDadosToken(req, res);
         req.query.userId = respostaToken.userId;
-        const listarFotosPorEntrega = await fotoRepository.listarFotosPorEntrega(req.query);
+        const listarFotosPorEntrega = await fotoRepository.listarFotosPorEntrega(req.params.idEntrega);
         Controller.responseSuccess(res, listarFotosPorEntrega);
+    }catch(error){
+        Controller.responseException(res, error);
+    }
+  }
+  async ListarImagens(req, res){
+    try{
+        const respostaToken = await Controller.validaBuscarDadosToken(req, res);
+        req.body.userId = respostaToken.userId;
+        const listarImagens = await fotoRepository.listarImagens(req.body);
+        Controller.responseSuccess(res, listarImagens);
     }catch(error){
         Controller.responseException(res, error);
     }
