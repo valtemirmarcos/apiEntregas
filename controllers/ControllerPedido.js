@@ -44,7 +44,8 @@ class ControllerPedido{
   async ListarPedidos(req, res){
     try{
         const respostaToken = await Controller.validaBuscarDadosToken(req, res);
-        const listarPedidos = await pedidoRepository.listarPedidos(req.query);
+
+        const listarPedidos = await pedidoRepository.listarPedidos(req.query, respostaToken.userId);
         Controller.responseSuccess(res, listarPedidos);
     }catch(error){
         Controller.responseException(res, error);
