@@ -48,10 +48,10 @@ class LoginRepository{
             mostraErro("falha ao deletar o pedido");
         }
     }
-    async listarPedidos(parametros){
+    async listarPedidos(parametros, userId){
         const filtroStatus = parametros.status;
         const query = pedido.findAll({
-            where:{status:filtroStatus}
+            where:{status:filtroStatus, userId:userId}
         });
         return query;
     }

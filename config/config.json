@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "valtemir",
+    "username": "root",
     "password": "123456",
     "database": "appEntregas",
-    "host": "127.0.0.1",
+    "host": "54.174.87.16",
     "dialect": "mysql",
     "timezone": "-03:00"
 
