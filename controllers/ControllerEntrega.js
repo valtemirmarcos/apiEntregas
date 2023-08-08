@@ -48,6 +48,17 @@ class ControllerEntrega{
         Controller.responseException(res, error);
     }
   }
+  async FinalizarEntregaPorUsuario(req, res){
+    try{
+        const respostaToken = await Controller.validaBuscarDadosToken(req, res);
+        req.query.userId = respostaToken.userId;
+        const finalizarEntregaPorUsuario = await entregaRepository.finalizarEntregaPorUsuario(req.body);
+        Controller.responseSuccess(res, finalizarEntregaPorUsuario);
+        
+    }catch(error){
+        Controller.responseException(res, error);
+    }
+  }
 }
 
 module.exports = ControllerEntrega;

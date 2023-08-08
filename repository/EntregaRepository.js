@@ -1,14 +1,45 @@
 const {dataLocalHora, mostraErro, dtHjGravacao} = require('../functions/functions');
 const models=require('../models');
+const fs = require('fs');
+const path = require('path');
+
 
 let entrega = models.Entrega;
 let pedido = models.Pedido;
+let foto = models.Foto;
 
 class EntregaRepository{
     constructor(){
 
     }
+    async salvarFoto(json){
+        
+        if(json.hasOwnProperty('entregaId')){
+            const verEntrega = await entrega.findByPk(json.entregaId);
+            if(!verEntrega){
+                mostraErro("codigo da entrega nao existente");
+            }
+            const caminho = json.caminho;
+            const nome = path.basename(caminho);
+            json.foto = nome;
+            json.url = caminho;
+            const imageData = fs.readFileSync(caminho);
+            const base64Data = imageData.toString('base64');
+            delete json.caminho;
+            json.fotoB64 = base64Data;
+            const inserir = await foto.create(json);
+            if(inserir){
+                return 1;
+            }else{
+                return 0;
+            }
+            
+        }else{
+            // "é necessario informar o codigo da entrega!"
+            return 0;
+        }
 
+    }
     async createEntrega(json){
         if(json.hasOwnProperty('pedidoId')){
             const verPedido = await pedido.findByPk(json.pedidoId);
@@ -80,6 +111,45 @@ class EntregaRepository{
             where:jsonfiltro
         });
         return buscaEntregues;
+    }
+    async finalizarEntregaPorUsuario(json){
+        
+        const jsonEntregas = json;
+        const images = json.images;
+        jsonEntregas.createdAt = dtHjGravacao();
+        jsonEntregas.updatedAt = dtHjGravacao();
+        delete jsonEntregas.images;
+        
+        const verStatusPedido = await pedido.findOne({
+            where:{
+                id:json.pedidoId,
+                status:1
+            }
+        });
+        if(verStatusPedido){
+            mostraErro("O pedido "+verStatusPedido.numeroPedido+" já esta como status entregue");
+            return '';
+        }
+        const insertEntrega = await entrega.create(jsonEntregas);
+        if(insertEntrega){
+            pedido.findByPk(json.pedidoId).then((resposta)=>{
+                resposta.status=1
+                resposta.save();
+            });
+            images.forEach(async (foto) => {
+                let jsonFoto = {
+                    'entregaId':insertEntrega.id,
+                    'caminho':foto,
+                    
+                };
+                const saida = await this.salvarFoto(jsonFoto);
+                console.log(saida);
+            });
+            return "entrega efetuada com sucesso";
+        }else{
+            mostraErro("falha ao inserir a entrega");
+        }
+        
     }
 
 }
