@@ -30,6 +30,7 @@ const controllerFoto = new ControllerFoto();
         rota.get('/update',controllerEntrega.UpdateEntrega);
         rota.get('/delete/:idEntrega',controllerEntrega.DeleteEntrega);
         rota.get('/',controllerEntrega.ListarEntregasPorUsuario);
+        rota.post('/finalizar',controllerEntrega.FinalizarEntregaPorUsuario);
     });
     rotas.group('/fotos',(rota) => {
         rota.get('/create',controllerFoto.CreateFoto);
@@ -38,4 +39,5 @@ const controllerFoto = new ControllerFoto();
         rota.get('/listaFotos/:idEntrega',controllerFoto.ListarFotosPorEntrega);
         rota.get('/listarImagens',controllerFoto.ListarImagens);
     });
+
 module.exports = rotas;

@@ -6,21 +6,37 @@ const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'production';
+
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
 let sequelize;
 // alteracao para puxar direto do env
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+// if (config.use_env_variable) {
+//   sequelize = new Sequelize(process.env[config.use_env_variable], config);
+// } else {
+//   sequelize = new Sequelize(config.database, config.username, config.password, config);
+// }
+const nconfig = process.env;
+
+// console.log("info env:");
+// console.log( process.env);
+if(env=='production'){
+  console.log( process.env.USERNAME);
+  sequelize = new Sequelize(process.env.DATABASE, process.env.USERNAME, process.env.PASSWORD, {
+    dialect:process.env.DIALECT,
+    host: process.env.HOST,
+    timezone: process.env.TIMEZONE,
+  });
+}else{
+  console.log( process.env.TEST_USERNAME);
+  sequelize = new Sequelize(process.env.TEST_DATABASE, process.env.TEST_USERNAME, process.env.TEST_PASSWORD, {
+    dialect:process.env.TEST_DIALECT,
+    host: process.env.TEST_HOST,
+    timezone: process.env.TEST_TIMEZONE,
+  });
 }
-// sequelize = new Sequelize(process.env.DATABASE, process.env.USERNAME, process.env.PASSWORD, {
-//   dialect:process.env.DIALECT,
-//   host: process.env.HOST,
-//   timezone: '-03:00'
-// });
+
 
 fs
   .readdirSync(__dirname)
